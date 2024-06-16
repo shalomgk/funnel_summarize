@@ -1,0 +1,77 @@
+version: "2"
+# Name of your Snap-in.
+name: "Funnel Summarize"
+# Description of your Snap-in.
+description: "Funnel Summarize Snap-in"
+
+# Display name of the service account that will be used to run the Snap-in.
+service_account:
+  display_name: Funnel Summarize
+
+# Required to import agent-sdk as it is a private devrev package. 
+developer_keyrings:
+  - name: github_access_token
+    description: GitHub access token
+    display_name: GitHub Access Token
+
+# Required to import agent-sdk as it is a private devrev package.
+build_config:
+  environment_variables:
+    - name: GITHUB_ACCESS_TOKEN
+      description: Token to access the GitHub repository
+      type: keyring
+      value: github_access_token
+
+# Required to persist agent attributes with the Snap-in.
+inputs:
+  organization:
+    - name: agent
+      description: Ticket copilot agent ID.
+      field_type: text
+      ui:
+        display_name: Agent ID
+        is_hidden: false
+    - name: goal
+      description: Goal of the agent.
+      field_type: text
+      ui:
+        display_name: Goal
+        is_hidden: false
+    - name: guidance
+      description: Guidance rules of the agent.
+      field_type: text
+      ui:
+        display_name: Guidance Rules
+        is_hidden: false
+
+functions:
+  # Function executed when the command is run.
+  - name: funnel_summarize
+    description: Function to handle copilot agent.
+  # Function executed when the Snap-in is installed. 
+  # This is necessary to create/update an agent and persist the agent id, goal, guidance in the inputs which will be used by the Snap-in.
+  - name: hooks_handler
+    description: Function to handle hooks.
+
+commands:
+  # name of the command.
+  - name: funnel_summarize
+    namespace: devrev
+    description: Funnel Summarize
+    # surface on which command is available.
+    surfaces:
+      - surface: discussions
+        object_types:
+          - ticket
+          - issue
+          - account
+    usage_hint: "[text]"
+    # function to be executed when the command is run.
+    function: funnel_summarize
+
+# This is necessary to create and update agent seamlessly which will be used by the Snap-in.
+hooks:
+  - type: activate
+    function: hooks_handler
+  - type: update
+    function: hooks_handler
