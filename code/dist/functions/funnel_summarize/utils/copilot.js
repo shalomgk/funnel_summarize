@@ -41,8 +41,9 @@ class Copilot {
     }
     CreateTicketCopilotAgent() {
         // Create ticket copilot agent
-        let goal = 'Help user with their queries';
-        let guidance = 'Be polite and helpful.';
+        let goal = 'Give funnel summary and funnel analysis in human readable mode';
+        // let guidance = 'Strictly use all the skills defined that is FetchFunnelAnalyticsSkill(), FetchConversionAppVersionSkill(),FetchFunnelEffortsSkill(), FetchFunnelAPIOverviewPartOneSkill(), FetchFunnelAPIOverviewPartTwoSkill(), FetchFunnelAPIOverviewPartThreeSkill(), GetFunnelDropoutSkill() and GetFunnelDataSkill() before providing a detailed summary of the funnel in paragraphs in human readable mode.'; 
+        let guidance = 'Use FetchFunnelAnalyticsSkill() to get the summary of funnels. Use funnelId as funnelId, appId as appId, appVersion as appVersion, platform as platform, fromDate as fromDate and toDate as toDate';
         let skills = [
             new get_funnel_analytics_skill_1.GetFunnelAnalyticsSkill(this.devrevSDK),
         ];

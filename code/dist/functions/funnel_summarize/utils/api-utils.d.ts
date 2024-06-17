@@ -1,4 +1,4 @@
-import { betaSDK } from '@devrev/typescript-sdk';
+import { betaSDK } from "@devrev/typescript-sdk";
 export type HTTPResponse = {
     success: boolean;
     message: string;
@@ -11,8 +11,8 @@ export declare class SdkUtils {
     endpoint: string;
     constructor(endpoint: string, token: string);
     getWork(id: string): Promise<HTTPResponse>;
-    getFunnelAnalytics(id: string): Promise<HTTPResponse>;
-    getConversionAppVersionSkill(id: string): Promise<HTTPResponse>;
-    getFunnelEffortsSkill(id: string): Promise<HTTPResponse>;
+    createWorkIssue(title: string, description: string, owner?: string): Promise<HTTPResponse>;
+    getAccount(id: string): Promise<HTTPResponse>;
     sendComment(id: string, body: string): Promise<HTTPResponse>;
+    getFunnelAnalytics(funnelId?: string, appId?: number, appVersion?: string, platform?: number, fromDate?: string, toDate?: string): Promise<any>;
 }

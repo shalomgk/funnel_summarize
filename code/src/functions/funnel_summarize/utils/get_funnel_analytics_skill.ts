@@ -1,6 +1,7 @@
 import { SkillCall } from '@devrev/agent-sdk';
 import { Skill } from '@devrev/agent-sdk';
 import { SdkUtils } from './api-utils';
+import axios from 'axios';
 
 export class GetFunnelAnalyticsSkill implements Skill {
   
@@ -9,7 +10,7 @@ export class GetFunnelAnalyticsSkill implements Skill {
   // Name of the skill.
   Name = 'GetFunnelAnalyticsSkill';
   // Description of the skill.
-  Description = 'Fetches the funnel analytics based on funnel id';
+  Description = 'Fetches the funnel analytics based on fields of the account object. Use funnelId as funnelId, appId as appId, appVersion as appVersion, platform as platform, fromDate as fromDate and toDate as toDate';
   // Input schema required to execute the skill
   InputSchema = {
     'type': 'object',
@@ -43,7 +44,69 @@ export class GetFunnelAnalyticsSkill implements Skill {
   }
   // Execute skill to get the account by id
   async Execute(skillCall: SkillCall): Promise<any> {
-    console.log('executing get funnel analytics skill with skillCall: ', skillCall);
-    return this.devrevSDK.getFunnelAnalytics(skillCall.args.id, skillCall.args.appId, skillCall.args.appVersion, skillCall.args.platform, skillCall.args.fromDate, skillCall.args.toDate);
+    // console.log('executing get funnel analytics skill with skillCall: ', skillCall.id);
+    // const resp = await this.devrevSDK.getFunnelAnalytics(skillCall.args.id, skillCall.args.appId, skillCall.args.appVersion, skillCall.args.platform, skillCall.args.fromDate, skillCall.args.toDate);
+    // console.log('shalom',resp!= null);    
+    // console.log('shalom-rp',resp);
+    // return resp;
+    try {
+      
+      // const url = 'https://app.userexperior.com/funnelrest/api/v1/funnel/analysis/analyticalPage/fetchFunnelAnalyticsPageApi';
+      // const headers = {
+        //   'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdWJpbkB1c2VyZXhwZXJpb3IuY29tIiwiZXhwIjoxNzE4Njk2NzQxLCJpYXQiOjE3MTg2MTAzNDF9.8whq3eLBUSfTyY--m2wYV3XysFGlgYxOMm0hEQG2q4thHycnsuHgu856RtFsac_20o2uT44CeHfRNq_xxVa4aQ',  // Replace with your actual authorization token
+      //     'Content-Type': 'application/json'
+      // };
+      // const body = {
+      //   funnelId: "1866",
+      //   appId: 1821,
+      //   appVersion: "0",
+      //   platform: 1,
+      //   fromDate: "2024-06-06 18:30:00",
+      //   toDate: "2024-06-14 09:23:03"
+      // }
+        
+      // const response = await axios.post(url, { headers , body});
+      // console.log("testingResponse 2", response.data!=null);
+      
+      // console.log("testingResponse 3", response.data);
+      // return response.data;
+
+      const requestData = {
+        headers: {
+          'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdWJpbkB1c2VyZXhwZXJpb3IuY29tIiwiZXhwIjoxNzE4Njk2NzQxLCJpYXQiOjE3MTg2MTAzNDF9.8whq3eLBUSfTyY--m2wYV3XysFGlgYxOMm0hEQG2q4thHycnsuHgu856RtFsac_20o2uT44CeHfRNq_xxVa4aQ',
+          'Content-Type': 'application/json'
+        },
+        body: {
+          funnelId: '1866',
+          appId: 1821,
+          appVersion: '0',
+          platform: 1,
+          fromDate: '2024-06-06 18:30:00',
+          toDate: '2024-06-14 09:23:03'
+        }
+      };
+      axios.post('https://app.userexperior.com/funnelrest/api/v1/funnel/graph', requestData)
+  .then(response => {
+    console.log('testingResponse data:', response.data);
+  })
+  .catch(error => {
+    if (error.response) {
+      // The server responded with a status code outside the range of 2xx
+      console.error('testingResponseServer responded with status:', error.response.status);
+      console.error('testingResponseResponse data:', error.response.data);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('testingResponseNo response received:', error.request);
+    } else {
+      // Something happened in setting up the request
+    console.error('testingResponserequest configuration:', error.config);
+    console.error('testingResponse Error setting up request:', error.message);
+    }
+    console.error('testingResponseRequest configuration:', error.config);
+  });
+    } catch (error: any) {
+      console.error("testingResponse Error executing fetching insights", error);
+      return "";
+    }
   }
 }
