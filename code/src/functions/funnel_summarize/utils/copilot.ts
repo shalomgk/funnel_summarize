@@ -2,6 +2,13 @@ import { HTTPResponse, SdkUtils } from './api-utils';
 import { AgentHandler } from '@devrev/agent-sdk';
 import { Skill } from '@devrev/agent-sdk';
 import { GetFunnelAnalyticsSkill } from './get_funnel_analytics_skill';
+import { GetFunnelDataSkill } from './fetch_funnel_data_skill';
+import { GetFunnelDropoutSkill } from './fetch_funnel_dropout_data_skill';
+import { FetchConversionAppVersionSkill } from './fetch_app_conversion_skill';
+import { FetchFunnelEffortsSkill } from './fetch_funnel_effort_skill';
+import { FetchFunnelAPIOverviewPartOneSkill } from './fetch_api_overview_process_id_one';
+import { FetchFunnelAPIOverviewPartTwoSkill } from './fetch_api_overview_process_id_two';
+import { FetchFunnelAPIOverviewPartThreeSkill } from './fetch_api_overview_process_id_three';
 
 export class Copilot {
   // devrevSDK is used to make API calls using service account token.
@@ -45,6 +52,13 @@ export class Copilot {
     let guidance = 'Be polite and helpful.';
     let skills: Skill[] = [
       new GetFunnelAnalyticsSkill(this.devrevSDK),
+      new GetFunnelDataSkill(this.devrevSDK),
+      new GetFunnelDropoutSkill(this.devrevSDK),
+      new FetchConversionAppVersionSkill(this.devrevSDK),
+      new FetchFunnelEffortsSkill(this.devrevSDK),
+      new FetchFunnelAPIOverviewPartOneSkill(this.devrevSDK),
+      new FetchFunnelAPIOverviewPartTwoSkill(this.devrevSDK),
+      new FetchFunnelAPIOverviewPartThreeSkill(this.devrevSDK)
     ];
     return new AgentHandler(this.endpoint, this.serviceToken, goal, guidance, skills);
   }

@@ -2,14 +2,14 @@ import { SkillCall } from '@devrev/agent-sdk';
 import { Skill } from '@devrev/agent-sdk';
 import { SdkUtils } from './api-utils';
 
-export class GetFunnelAnalyticsSkill implements Skill {
+export class GetFunnelDataSkill implements Skill {
   
   // devrevSDK is used to make API calls using service account token.
   devrevSDK: SdkUtils;
   // Name of the skill.
-  Name = 'GetFunnelAnalyticsSkill';
+  Name = 'GetFunnelDataSkill';
   // Description of the skill.
-  Description = 'Fetches the funnel analytics based on funnel id';
+  Description = 'Fetches the funnel data based on funnel id';
   // Input schema required to execute the skill
   InputSchema = {
     'type': 'object',
@@ -18,22 +18,22 @@ export class GetFunnelAnalyticsSkill implements Skill {
         'description': 'The funnel id of the account',
       },
       'appId': {
-        'description': 'The funnel id of the account',
+        'description': 'The app id of the account',
       },
       'appVersion': {
-        'description': 'The funnel id of the account',
+        'description': 'The app version of the account',
       },
       'platform': {
-        'description': 'The funnel id of the account',
+        'description': 'The platform of the account',
       },
       'fromDate': {
-        'description': 'The funnel id of the account',
+        'description': 'The start Date of the funnel analytics',
       },
       'toDate': {
-        'description': 'The funnel id of the account',
+        'description': 'The end Date of the funnel analytics',
       },
     },
-    'required': ['id'],
+    'required': ['id', 'appId', 'appVersion', 'platform', 'fromDate', 'toDate'],
   };
   // Additional options for the skill to execute any external api.
   Opts = {};
@@ -43,7 +43,7 @@ export class GetFunnelAnalyticsSkill implements Skill {
   }
   // Execute skill to get the account by id
   async Execute(skillCall: SkillCall): Promise<any> {
-    console.log('executing get funnel analytics skill with skillCall: ', skillCall);
-    return this.devrevSDK.getFunnelAnalytics(skillCall.args.id);
+    console.log('executing get funnel effort skill with skillCall: ', skillCall);
+    return this.devrevSDK.getFunnelDataSkill(skillCall.args.id, skillCall.args.appId, skillCall.args.appVersion, skillCall.args.platform, skillCall.args.fromDate, skillCall.args.toDate);
   }
 }
