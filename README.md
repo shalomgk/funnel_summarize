@@ -87,11 +87,15 @@ https://docs.google.com/document/d/1zRpj_9GyfKzuEGQj78n4kMkMNJCom6NUltala8rUadg/
 
 ## How to try out your Agent?
 
-\<Steps\>
+https://colab.research.google.com/drive/1c4zWwa7_my2PF38GUct8Lq4vKBL2mx4c?usp=sharing
+
+Run all the blocks and on user input ask for funnel summary and you will be able to see the output.
 
 ## Screenshots of the output
 
 \<Images\>
+
+https://docs.google.com/document/d/1J7wv0x2p1FM-W3V0DwIB_hJ_X0ClBBupS7OfP_44iac/edit?usp=sharing
 
 ## Video demonstration
 
